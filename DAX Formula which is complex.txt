@@ -1,0 +1,32 @@
+Two ways for the same situation:
+
+****************
+1st way:
+****************
+
+Multiple values from multiple slicers = var DS=if(ISFILTERED(DimDate[Day]),CONCATENATEx(allselected(DimDate[Day]),DimDate[Day],","),"")
+var MS=if(ISFILTERED(DimDate[Month]),CONCATENATEx(allselected(DimDate[Month]),DimDate[Month],",")," ")
+var YS=if(ISFILTERED(DimDate[Year]),CONCATENATEx(allselected(DimDate[Year]),DimDate[Year],","),"")
+
+return 
+
+if( YS && MS && DS, COMBINEVALUES("|",YS,MS,DS), if( YS && MS, COMBINEVALUES("|",YS,MS),If(YS && DS,COMBINEVALUES("|",YS,DS),
+	if(MS && DS, COMBINEVALUES("|",MS,DS), if(YS, YS,if(MS, MS, if(DS, DS, "Not Selected")))))))
+
+
+****************
+2nd way:
+***************
+Mes3 = IF(ISFILTERED(Date_data[pre assessment month]) && ISFILTERED('merged (2)'[age bracket]) && ISFILTERED(Resident[CommunityName]) , combinevalues("|",
+CONCATENATEX(VALUES(Date_data[pre assessment month]), (Date_data[pre assessment month]),","),
+CONCATENATEX(VALUES('merged (2)'[age bracket]),'merged (2)'[age bracket],","),
+CONCATENATEX(VALUES(Resident[CommunityName]), Resident[CommunityName],",")),
+IF(ISFILTERED(Date_data[pre assessment month]) && ISFILTERED('merged (2)'[age bracket]),
+combinevalues("|",
+CONCATENATEX(VALUES(Date_data[pre assessment month]), (Date_data[pre assessment month]),","),
+CONCATENATEX(VALUES('merged (2)'[age bracket]),'merged (2)'[age bracket],",")),IF(ISFILTERED(Date_data[pre assessment month]) &&  ISFILTERED(Resident[CommunityName]),
+COMBINEVALUES("|",CONCATENATEX(VALUES(Date_data[pre assessment month]), (Date_data[pre assessment month]),","),
+CONCATENATEX(VALUES(Resident[CommunityName]), Resident[CommunityName],",")),IF(ISFILTERED('merged (2)'[age bracket]) && ISFILTERED(Resident[CommunityName]),
+COmbinevalues("|",CONCATENATEX(VALUES('merged (2)'[age bracket]),'merged (2)'[age bracket],","),
+CONCATENATEX(VALUES(Resident[CommunityName]), Resident[CommunityName],",")),If(ISFILTERED(Date_data[pre assessment month]), CONCATENATEX(VALUES(Date_data[pre assessment month]), (Date_data[pre assessment month]),","),if(ISFILTERED('merged (2)'[age bracket]), CONCATENATEX(VALUES('merged (2)'[age bracket]),'merged (2)'[age bracket],","),if(ISFILTERED(Resident[CommunityName]),
+CONCATENATEX(VALUES(Resident[CommunityName]), Resident[CommunityName],","))))))))

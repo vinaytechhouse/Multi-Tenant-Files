@@ -1,0 +1,13 @@
+There is a change request to the existing dashboard and I felt complex in this project.
+
+
+For the inchcape dashboard, in every page we need a display of period based on the below requirement.
+
+a) If single slicer value selected, respective value should display
+b) If Two slicers values selected , respective values should display by delimiting "|"
+c) If three slicers values selected, respective values should display by delimiting "|
+d) If no slicer value selected, display...not selected
+
+e) If multiple values in a slicer selected, they should be seperated with ","
+
+Ex: 2017,2018 | Q2,Q1 | 3, 2
